@@ -1,0 +1,186 @@
+.mainTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.mainTableDest {
+  height: 35px;
+  color: rgba(179,179,179);
+  text-align: center;
+}
+
+.mainTableHeader {
+  height: 30px;
+  text-align: center;
+  font-size: 8pt;
+  color: gray;
+}
+
+.mainTableDest {
+  border: 1px solid rgba(73, 73, 73, 0.288);
+}
+
+.mainTableRow:first-child .mainTableDest {
+  border-top: 0;
+}
+
+.mainTableRow .mainTableDest {
+  border-left: 0;
+  border-right: 0;
+}
+
+#publishedyear {
+  color: rgba(179,179,179);
+  font-size: 9pt;
+  text-indent: 2em;
+  padding: 10px; 
+}
+
+#albumtitle {
+  color: white;
+  font-size: 30pt;
+  font-weight: bold;
+}
+
+#songname {
+  color: whitesmoke;
+  text-align: left;
+}
+
+#songnametitle {
+  text-align: left;
+  font-weight: lighter;
+}
+
+#id {
+  font-size: 1pt;
+}
+
+#hoverelements:hover {
+  background-color: #42414194;
+}
+
+#spfybtn {
+  background: transparent;
+  border-radius: 500px;
+  color: #fff;
+  font-size: 11px;
+  line-height: 11px;
+  margin: 25px;
+  min-width: 100px;
+  padding: 8px 25px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  margin-right: 10px;
+  float: left;
+  border: 0.5px solid #b3b3b3;
+}
+
+#spfybtn:hover {
+  transform:scale(1.1,1.1);
+  -webkit-transform:scale(1.1,1.1);
+  -moz-transform:scale(1.1,1.1);
+  border: 1.4px solid white;
+}
+
+#spfybtnround {
+  background: transparent;
+  border-radius: 100%;
+  color: #fff;
+  font-size: 11px;
+  line-height: 11px;
+  margin: 25px;
+  min-width: 0px;
+  padding: 8px 9px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  margin-right: 10px;
+  float: left;
+  border: 0.5px solid #b3b3b3;
+}
+
+#spfybtnround:focus {
+  transform:scale(1.1,1.1);
+  -webkit-transform:scale(1.1,1.1);
+  -moz-transform:scale(1.1,1.1);
+  border: 1.4px solid white;
+}
+
+#spfybtnround:hover {
+  transform:scale(1.1,1.1);
+  -webkit-transform:scale(1.1,1.1);
+  -moz-transform:scale(1.1,1.1);
+  border: 1.4px solid white;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdowncontent {
+  display: none;
+  position: absolute;
+  background-color: rgb(32, 32, 32);
+  border-radius: 5px;
+  width: max-content;
+  height: 23px;
+  box-shadow: 0px 10px 50px 3px rgb(0, 0, 0);
+  padding: 3px 9px;
+  right: -65px;
+  bottom: -40px;
+  font-size: 11pt;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdowncontent {
+  display: block;
+}
+
+.albumheader {
+  padding-bottom: 50px;
+}
+
+.containeralbumimageplay {
+  position: relative;
+  width: 150px;
+}
+
+.albumimage {
+  opacity: 1;
+  display: block;
+  width: 140px;
+  height: 140px;
+  backface-visibility: hidden;
+}
+
+.middlealbumimage {
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.containeralbumimageplay:hover .albumimage {
+  opacity: 0.3;
+}
+
+.containeralbumimageplay:hover .middlealbumimage {
+  opacity: 1;
+}
+
+.middlealbumimagetext {
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+}
+
+.middlealbumimagetext:hover {
+  transform:scale(1.1,1.1);
+  -webkit-transform:scale(1.1,1.1);
+  -moz-transform:scale(1.1,1.1);
+}

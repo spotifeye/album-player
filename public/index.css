@@ -1,0 +1,26 @@
+html {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  overflow: auto;
+  cursor: default;
+}
+
+#albumApp {
+  background: rgb(25, 25, 25);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+*:focus {
+  outline: 0;
+}
