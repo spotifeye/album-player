@@ -58,7 +58,7 @@ npm install
 
 
 ## CRUD Operations
-> ALL 
+### ALL 
 - /api/v1/artists/:artistID
   - If no matching artistID found
     - **status: 400** BAD REQUEST
@@ -66,7 +66,7 @@ npm install
   - **status: 404** NOT FOUND
 
 
-> GET
+### GET
 - /api/v1/artists/:artistID/albums
   - If previously deleted
     - **status: 410** GONE
@@ -83,7 +83,7 @@ npm install
   - data: [album id=albumID] 
 
 
-> POST
+### POST
 - /api/v1/artists/:artistID/albums
   - If previously deleted
     - **status: 410** GONE
@@ -101,7 +101,7 @@ npm install
     - prevent 
 
 
-> PUT
+### PUT
 - /api/v1/artists/:artistID/albums
   - If previously deleted
     - **status: 410** GONE
@@ -117,7 +117,7 @@ npm install
 
 
 
-> PATCH
+### PATCH
 - /api/v1/artists/:artistID/albums
   - If previously deleted
     - **status: 410** GONE
@@ -133,7 +133,7 @@ npm install
   - **status: 200** OK
 
 
-> DELETE
+### DELETE
 - /api/v1/artists/:artistID/albums
   - **status: 405** Method Not Allowed
     - this is to prevent deleting all albums
