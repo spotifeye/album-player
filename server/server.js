@@ -5,6 +5,7 @@ const { getArtist } = require('../database/index.js');
 const cors = require('cors');
 const server = express();
 const compression = require('compression');
+const artistsRouter = require('./artists.router.js');
 
 server.use(bodyParser.json());
 server.use(cors());
