@@ -74,7 +74,8 @@ npm install
     - **status: 400** BAD REQUEST
   - **status: 200** OK 
   - data: [album 1, album2, ... album n] 
-- /api/v1/artists/:artistID/albums/:albumID
+
+/api/v1/artists/:artistID/albums/:albumID
   - If previously deleted
     - **status: 410** GONE
   - If no matching albumID found
@@ -85,46 +86,32 @@ npm install
 
 ### POST
 - /api/v1/artists/:artistID/albums
-  - If previously deleted
-    - **status: 410** GONE
-  - If no matching albumID found
-    - **status: 400** BAD REQUEST
   - **status: 201** Created
-    - creates albums with all the nested info
-  - location: albums/[newID]
+    - creates an album with all the nested info
+  - **location**: albums/[newID]
+  
 - /api/v1/artists/:artistID/albums/:albumID
-  - If previously deleted
-    - **status: 410** GONE
-  - If no matching albumID found
-    - **status: 400** BAD REQUEST
   - **status: 405** Method Not Allowed
-    - prevent 
-
 
 ### PUT
 - /api/v1/artists/:artistID/albums
-  - If previously deleted
-    - **status: 410** GONE
-  - If no matching albumID found
-    - **status: 400** BAD REQUEST
-  - **status: 200** OK 
+  - **status: 405** Method Not Allowed
+    - no practical use case to swap out the entire album library of an artist
 - /api/v1/artists/:artistID/albums/:albumID
   - If previously deleted
     - **status: 410** GONE
   - If no matching albumID found
     - **status: 400** BAD REQUEST
   - **status: 200** OK
+    - swap out the target album of an artist
+      - request data shall provide a whole info
 
 
 
 ### PATCH
 - /api/v1/artists/:artistID/albums
-  - If previously deleted
-    - **status: 410** GONE
-  - If no matching albumID found
-    - **status: 400** BAD REQUEST
-  - **status: 200** OK
-    - updates one of the albums
+  - **status: 405** Method Not Allowed
+    - redundant to PUT /api/v1/artists/:artistID/albums/:albumID
 - /api/v1/artists/:artistID/albums/:albumID
   - If previously deleted
     - **status: 410** GONE
@@ -136,13 +123,14 @@ npm install
 ### DELETE
 - /api/v1/artists/:artistID/albums
   - **status: 405** Method Not Allowed
-    - this is to prevent deleting all albums
+    - disallow deleting all albums by accident
 - /api/v1/artists/:artistID/albums/:albumID
   - If no matching albumID found
     - **status: 400** BAD REQUEST
   - If previously deleted
     - **status: 410** GONE
-  - **status: 200** OK
+  - **status: 418** I'm a teapot
+    - change all the values to null
 
 
 
