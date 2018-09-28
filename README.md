@@ -104,7 +104,7 @@ npm install
     - **status: 400** BAD REQUEST
   - **status: 200** OK
     - swap out the target album of an artist
-      - request data shall provide a whole info
+      - request data shall provide a full album info
 
 
 
