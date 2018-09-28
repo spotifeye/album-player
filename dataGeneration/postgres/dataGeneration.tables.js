@@ -52,6 +52,9 @@ const generateData = (sizeEachFile, TotalCounter) => {
         }
       }
     }
+    artistStream.end();
+    albumStream.end();
+    songStream.end();
     console.log(`${fileID + 1} out of ${numFiles} COMPLETE!`);
   }
 };
