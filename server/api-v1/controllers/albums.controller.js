@@ -7,10 +7,10 @@ module.exports = {
       res.send('LOGGING GET FROM albumsRouter');
       /* TODO: 
       If previously deleted
-      status: 410 GONE
+      status: 404 NOT FOUND
       If no matching albumID found
       status: 400 BAD REQUEST
-      status: 200 OK
+      status: 200 OK  // FIXME: 404 if query did not find.
       data: [album 1, album2, ... album n]*/
     },
     POST(req, res) {
@@ -39,7 +39,7 @@ module.exports = {
       res.send('LOGGING GET FROM albumsRouter - ID');
       /* TODO:
       If previously deleted
-      status: 410 GONE
+      status: 404 NOT FOUND
       If no matching albumID found
       status: 400 BAD REQUEST
       status: 200 OK
@@ -53,7 +53,7 @@ module.exports = {
       res.send('LOGGING PUT FROM albumsRouter - ID');
       /* TODO:  
       If previously deleted
-      status: 410 GONE
+      status: 404 NOT FOUND
       If no matching albumID found
       status: 400 BAD REQUEST
       status: 200 OK
@@ -64,7 +64,7 @@ module.exports = {
       res.send('LOGGING PATCH FROM albumsRouter - ID');
       /* TODO:
       If previously deleted
-      status: 410 GONE
+      status: 404 NOT FOUND
       If no matching albumID found
       status: 400 BAD REQUEST
       status: 200 OK */
@@ -74,7 +74,8 @@ module.exports = {
       /* TODO: If no matching albumID found
       status: 400 BAD REQUEST
       If previously deleted
-      status: 410 GONE
+      status: 404 NOT FOUND
+      els
       status: 418 I'm a teapot
       change all the values to null */
     }
