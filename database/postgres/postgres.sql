@@ -1,7 +1,7 @@
 CREATE TABLE "ARTISTS" (
-	"artistID" integer NOT NULL,
-	"artistName" varchar NOT NULL,
-	CONSTRAINT ARTISTS_pk PRIMARY KEY ("artistID")
+	"id" integer NOT NULL,
+	"name" varchar NOT NULL,
+	CONSTRAINT ARTISTS_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
@@ -9,8 +9,8 @@ CREATE TABLE "ARTISTS" (
 
 
 CREATE TABLE "SONGS" (
-	"songID" serial NOT NULL,
-	"songName" serial NOT NULL,
+	"id" serial NOT NULL,
+	"name" serial NOT NULL,
 	"streams" integer NOT NULL,
 	"length" integer NOT NULL,
 	"popularity" integer NOT NULL,
@@ -24,12 +24,12 @@ CREATE TABLE "SONGS" (
 
 
 CREATE TABLE "ALBUMS" (
-	"albumID" serial NOT NULL,
-	"albumName" varchar NOT NULL,
+	"id" serial NOT NULL,
+	"name" varchar NOT NULL,
 	"albumImage" varchar NOT NULL,
 	"publishedYear" integer NOT NULL,
 	"artist_ID" integer NOT NULL,
-	CONSTRAINT ALBUMS_pk PRIMARY KEY ("albumID")
+	CONSTRAINT ALBUMS_pk PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
@@ -37,6 +37,6 @@ CREATE TABLE "ALBUMS" (
 
 
 
-ALTER TABLE "SONGS" ADD CONSTRAINT "SONGS_fk0" FOREIGN KEY ("album_ID") REFERENCES "ALBUMS"("albumID");
+ALTER TABLE "SONGS" ADD CONSTRAINT "SONGS_fk0" FOREIGN KEY ("album_ID") REFERENCES "ALBUMS"("id");
 
-ALTER TABLE "ALBUMS" ADD CONSTRAINT "ALBUMS_fk0" FOREIGN KEY ("artist_ID") REFERENCES "ARTISTS"("artistID");
+ALTER TABLE "ALBUMS" ADD CONSTRAINT "ALBUMS_fk0" FOREIGN KEY ("artist_ID") REFERENCES "ARTISTS"("id");

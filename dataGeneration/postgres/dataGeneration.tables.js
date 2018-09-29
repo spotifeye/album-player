@@ -8,19 +8,19 @@ const generateData = (sizeEachFile, TotalCounter) => {
 
   // Just Templates for Each Tables. I use it make CSV file headers.
   let artistTemplate = {
-    artistID: undefined,
-    artistName: undefined
+    id: undefined,
+    name: undefined
   };
 
   let albumTemplate = {
-    albumID: undefined,
-    albumName: undefined,
-    albumImage: undefined,
+    id: undefined,
+    name: undefined,
+    image: undefined,
     publishedYear: undefined,
     artist_ID: undefined
   };
   let songTemplate = {
-    songID: undefined,
+    id: undefined,
     songName: undefined,
     streams: undefined,
     length: undefined,
@@ -43,8 +43,9 @@ const generateData = (sizeEachFile, TotalCounter) => {
       artistStream.write(`${i},${faker.name.findName()}\n`);
 
       var albumCount = faker.random.number({ min: 1, max: 4 });
+      var start = faker.random.number({ min: 1, max: 996 });
       for (let j = 1; j < albumCount + 1; j++) {
-        albumStream.write(`${i * 10 + j},${faker.random.words()},${coolImages.one(400, 400)},${faker.random.number({ min: 1950, max: 2018 })},${i}\n`);
+        albumStream.write(`${i * 10 + j},${faker.random.words()},https://s3-us-west-1.amazonaws.com/sdc-spotifeye/photos/${start + j}.jpg,${faker.random.number({ min: 1950, max: 2018 })},${i}\n`);
 
         var songNumber = faker.random.number({ min: 2, max: 10 });
         for (let k = 1; k < songNumber; k++) {
@@ -59,7 +60,7 @@ const generateData = (sizeEachFile, TotalCounter) => {
   }
 };
 
-generateData(1000000, 10000000);
+generateData(100000, 200000);
 
 // let artist = {
 //   artistID: i,
