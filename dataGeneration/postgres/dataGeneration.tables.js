@@ -3,7 +3,7 @@ const fs = require('fs');
 const coolImages = require('cool-images');
 
 // sizeEachFile = number of artists in each file
-const generateData = (sizeEachFile, TotalCounter) => {
+const generateData = async (sizeEachFile, TotalCounter) => {
   var numFiles = Math.ceil(TotalCounter / sizeEachFile);
 
   // Just Templates for Each Tables. I use it make CSV file headers.
@@ -21,7 +21,7 @@ const generateData = (sizeEachFile, TotalCounter) => {
   };
   let songTemplate = {
     id: undefined,
-    songName: undefined,
+    name: undefined,
     streams: undefined,
     length: undefined,
     popularity: undefined,
@@ -60,7 +60,7 @@ const generateData = (sizeEachFile, TotalCounter) => {
   }
 };
 
-generateData(100000, 200000);
+generateData(100000, 2000000);
 
 // let artist = {
 //   artistID: i,
