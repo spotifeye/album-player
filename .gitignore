@@ -35,3 +35,5 @@ build/
 REST
 
 data/
+
+config/
