@@ -53,7 +53,7 @@ readdirAsync(__dirname + '/../dataGeneration/postgres/data/albumsAsync')
     });
   })
   .catch(err => {
-    console.log(error);
+    console.log(err);
   });
 
 readdirAsync(__dirname + '/../dataGeneration/postgres/data/songsAsync')

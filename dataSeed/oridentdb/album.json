@@ -1,0 +1,19 @@
+{
+  "config": { "haltOnError": false },
+  "source": { "file": { "path": "/Users/davidhong/Desktop/HackReactor/SDC/davy-album-player/dataGeneration/postgres/data/albumsAsync/data0.csv" } },
+  "extractor": {
+    "csv": {
+      "columns": ["id", "name", "image", "publishedyear", "artist_id"],
+      "columnsOnFirstLine": true
+    }
+  },
+  "transformers": [{ "vertex": { "class": "Album" } }, { "edge": { "class": "BelongsToArtist", "joinFieldName": "artist_id", "lookup": "Artist.id" } }],
+  "loader": {
+    "orientdb": {
+      "dbURL": "plocal:../databases/spotifeye",
+      "dbType": "graph",
+      "classes": [{ "name": "Album", "extends": "V" }, { "name": "BelongsToArtist", "extends": "E" }],
+      "indexes": [{ "class": "Album", "fields": ["id:integer"], "type": "UNIQUE" }, { "class": "Album", "fields": ["name:string"], "type": "NOTUNIQUE" }]
+    }
+  }
+}
