@@ -30,9 +30,9 @@ let songTemplate = {
 var writeOneFile = function(fileID, sizeEachFile) {
   return new Promise((resolve, reject) => {
     // Initiate writeStream
-    var artistStream = fs.createWriteStream(__dirname + `/data/artistsAsync/data${fileID}.csv`);
-    var albumStream = fs.createWriteStream(__dirname + `/data/albumsAsync/data${fileID}.csv`);
-    var songStream = fs.createWriteStream(__dirname + `/data/songsAsync/data${fileID}.csv`);
+    var artistStream = fs.createWriteStream(__dirname + `/data2/artists/data${fileID}.csv`);
+    var albumStream = fs.createWriteStream(__dirname + `/data2/albums/data${fileID}.csv`);
+    var songStream = fs.createWriteStream(__dirname + `/data2/songs/data${fileID}.csv`);
 
     artistStream.write(Object.keys(artistTemplate).join(',') + '\n');
     albumStream.write(Object.keys(albumTemplate).join(',') + '\n');
@@ -45,7 +45,7 @@ var writeOneFile = function(fileID, sizeEachFile) {
       };
       artistStream.write(Object.values(artist).join(',') + '\n');
 
-      var albumCount = faker.random.number({ min: 1, max: 4 });
+      var albumCount = faker.random.number({ min: 1, max: 2 });
       var start = faker.random.number({ min: 1, max: 996 });
       for (let j = 1; j <= albumCount + 1; j++) {
         let album = {
@@ -60,7 +60,7 @@ var writeOneFile = function(fileID, sizeEachFile) {
         }
         albumStream.write(Object.values(album).join(',') + '\n');
 
-        var songNumber = faker.random.number({ min: 2, max: 10 });
+        var songNumber = faker.random.number({ min: 1, max: 3 });
         for (let k = 1; k <= songNumber; k++) {
           let song = {
             id: artist.id * 100 + album.id * 10 + k,
@@ -78,40 +78,26 @@ var writeOneFile = function(fileID, sizeEachFile) {
         }
       }
     }
-    artistStream.end();
-    albumStream.end();
-    songStream.end(resolve);
+    artistStream.end(() => {
+      albumStream.end(() => {
+        songStream.end(() => {
+          resolve(fileID + 1);
+        });
+      });
+    });
   });
 };
 
 var writeMultipleFiles = async function(fileCount, sizeEachFile) {
-  var i = 1;
-  // while (i < fileCount) {
-  // console.time(`WRITING FILE ${i}`);
-  await writeOneFile(i, sizeEachFile);
-  // console.timeEnd(`WRITING FILE ${i}`);
-  // i += 1;
-  // }
+  var i = 0;
+  while (i < fileCount) {
+    console.time(`WRITING FILE ${i}`);
+    var nextFile = await writeOneFile(i, sizeEachFile);
+    console.timeEnd(`WRITING FILE ${i}`);
+    i = nextFile;
+  }
+  console.timeEnd('SINGLE THREAD WRITE');
 };
 
-console.time('SINGLE THREAD');
-writeMultipleFiles(1, 1000000);
-console.timeEnd('SINGLE THREAD');
-
-// if (cluster.isMaster) {
-//   console.log(`Master ${process.pid} is running`);
-
-//   // Fork workers.
-//   for (let i = 0; i < numCPUs; i++) {
-//     cluster.fork();
-//   }
-//   cluster.on('exit', (worker, code, signal) => {
-//     console.log(`worker ${worker.process.pid} died`);
-//   });
-// } else {
-//   console.log(`Worker ${process.pid} started`);
-//   console.log(process);
-//   // console.time('MULTI THREAD');
-//   // writeMultipleFiles(2, 50000);
-//   // console.timeEnd('MULTI THREAD');
-// }
+console.time('SINGLE THREAD WRITE');
+writeMultipleFiles(20, 500000);

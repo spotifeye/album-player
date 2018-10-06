@@ -5,6 +5,7 @@ const dbPool = function(queryString) {
   return new Promise((resolve, reject) => {
     pool.connect((err, client, done) => {
       if (err) throw err;
+      // console.log('connected!');
       client.query(queryString, (err, res) => {
         done();
         if (err) {
@@ -17,75 +18,46 @@ const dbPool = function(queryString) {
   });
 };
 
-let artistTemplate = {
-  id: undefined,
-  name: undefined
-};
-let albumTemplate = {
-  id: undefined,
-  name: undefined,
-  image: undefined,
-  publishedyear: undefined,
-  artist_id: undefined
-};
-let songTemplate = {
-  id: undefined,
-  name: undefined,
-  streams: undefined,
-  length: undefined,
-  popularity: undefined,
-  addedtolibrary: undefined,
-  album_id: undefined
-};
-
 // var testQuery = 'SELECT * FROM "ALBUMS" WHERE artist_id = 11010000;';
-var artist = {
+var findArtists = {
   GET: targetArtistID => {
     var query = `SELECT * FROM "ARTISTS" WHERE id = ${targetArtistID};`;
     return dbPool(query);
   }
 };
 
-var albums = {
+var findAlbums = {
   GET: targetArtistID => {
-    var query = `SELECT id, name, image, publishedyear  FROM "ALBUMS" WHERE artist_id = ${targetArtistID};`;
+    var query = `SELECT id, name, image, "publishedYear"  FROM "ALBUMS" WHERE artist_id = ${targetArtistID};`;
     return dbPool(query);
   }
 };
 
-var songs = {
-  GET: targetArtistID => {
-    var query = `SELECT id,  FROM "ALBUMS" WHERE artist_id = ${targetArtistID};`;
+var findSongs = {
+  GET: targetAlbumID => {
+    var query = `SELECT * FROM "SONGS" WHERE album_id = ${targetAlbumID};`;
     return dbPool(query);
-  },
-  GET2: targetArtistID => {
-    var queryAlbums = `SELECT id, name, image, publishedyear  FROM "ALBUMS" WHERE artist_id = ${targetArtistID};`;
-    dbPool(queryAlbums)
-      .then(albumRes => {
-        // console.log(albumRes);
-        Promise.all(
-          albumRes.map(album => {
-            var querySongs = `SELECT id, name, streams, length, popularity, addedtolibrary FROM "SONGS" WHERE album_id = ${album.id};`;
-            return dbPool(querySongs);
-          })
-        ).then(songRes => {
-          console.log(songRes);
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }
 };
 
-// GET Artist
-// GET Albums
-// For Each Album, get Songs
-// Insert Songs into the Album Prop
-// Insert Albums to Artists
+const getArtistInfoNest = async function(artistID, callback) {
+  var artist = await findArtists.GET(artistID);
+  var albums = await findAlbums.GET(artistID);
+  var artist = artist[0];
+  artist.albums = albums;
 
+  // console.log(albums);
+  for (let i = 0; i < albums.length; i++) {
+    albums[i].songs = await findSongs.GET(albums[i].id);
+  }
+  callback(artist);
+};
+
+console.time('test');
 console.time('nested db query');
-songs.GET2(11010000);
-console.timeEnd('nested db query');
+getArtistInfoNest(11040000, res => {
+  console.timeEnd('nested db query'); //average time = 40ms
+  console.log(res);
+});
 
 module.exports = {};
