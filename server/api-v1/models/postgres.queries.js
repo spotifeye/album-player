@@ -24,11 +24,13 @@ Left in for organization and future updates.
 */
 var db = {
   ADD: {
-    /* artist: () => {// METHOD NOT AVAILABLE}, */
+    artist: ({ name }) => {
+      dpPool(`INSERT INTO "ARTISTS" (name) VALUES (${name});`);
+    },
     /* albums: () => {// METHOD NOT AVAILABLE}, */
-    album: targetArtistID => dbPool(`SELECT * FROM "ARTISTS" WHERE id = ${targetArtistID};`),
+    album: ({ name, image, publishedYear, targetArtistID }) => dbPool(`INSERT INTO "ALBUMS" (name,image,"publishedYear",artist_id) VALUES ('${name}', '${image}' , ${publishedYear}, ${targetArtistID});`),
     /* songs: () => {// METHOD NOT AVAILABLE}, */
-    song: targetAlbumID => dbPool(`SELECT * FROM "ARTISTS" WHERE id = ${targetArtistID};`)
+    song: ({ name, streams, length, popularity, addedToLibrary, targetAlbum_id }) => dbPool(`INSERT INTO "SONGS" (name,streams,length,popularity,"addedToLibrary",album_id) VALUES ('${name}', ${streams} , ${length}, ${popularity}, ${addedToLibrary},${targetAlbum_id});`)
   },
   FIND: {
     artist: targetArtistID => dbPool(`SELECT * FROM "ARTISTS" WHERE id = ${targetArtistID};`),
@@ -39,24 +41,29 @@ var db = {
   },
   UPDATE: {
     /* artist:() => {// METHOD NOT AVAILABLE}, */
-    albums: () => {},
-    album: () => {},
-    songs: () => {},
-    song: () => {}
-  },
-  SWAP: {
-    /* artist:() => {// METHOD NOT AVAILABLE}, */
-    /* albums:() => {// METHOD NOT AVAILABLE}, */
-    /* album:() => {// METHOD NOT AVAILABLE}, */
-    /* songs:() => {// METHOD NOT AVAILABLE}, */
-    song: () => {}
+    /* albums: () => {// METHOD NOT AVAILABLE}, */
+    album: ({ targetAlbumID, name, image, publishedYear }) =>
+      dbPool(`UPDATE "ALBUMS" SET 
+      name = '${name}', 
+      image = '${image}', 
+      "publishedYear" = ${publishedYear} 
+      WHERE id = ${targetAlbumID};`),
+    /* songs: () => {// METHOD NOT AVAILABLE}, */
+    song: ({ targetSongID, name, streams, length, popularity, addedToLibrary, targetAlbum_id }) =>
+      dbPool(`UPDATE "SONGS" SET 
+      name = '${name}', 
+      streams = ${streams}, 
+      length = ${length}, 
+      popularity = ${popularity}, 
+      "addedToLibrary" = ${addedToLibrary} 
+      WHERE id = ${targetSongID};`)
   },
   DELETE: {
     /* artist:() => {// METHOD NOT AVAILABLE}, */
     /* albums:() => {// METHOD NOT AVAILABLE}, */
-    album: () => {},
+    album: targetAlbumID => dbPool(`DELETE FROM "ALBUMS" WHERE id = ${targetAlbumID}`),
     /* songs:() => {// METHOD NOT AVAILABLE}, */
-    song: () => {}
+    song: targetSongID => dbPool(`DELETE FROM "SONGS" WHERE id = ${targetSongID}`)
   }
 };
 
