@@ -16,7 +16,7 @@ const CopyQuery = function(postgresQuery, callback) {
         if (err) {
           reject(err);
         } else {
-          console.log('####QUERY SUCCESS####');
+          // console.log('####QUERY SUCCESS####');
           resolve();
         }
       });
@@ -39,7 +39,7 @@ readdirAsync(__dirname + '/../dataGeneration/postgres/data/artistsAsync')
     });
   })
   .catch(err => {
-    console.log(error);
+    // console.log(error);
   });
 
 readdirAsync(__dirname + '/../dataGeneration/postgres/data/albumsAsync')
@@ -53,7 +53,7 @@ readdirAsync(__dirname + '/../dataGeneration/postgres/data/albumsAsync')
     });
   })
   .catch(err => {
-    console.log(err);
+    // console.log(err);
   });
 
 readdirAsync(__dirname + '/../dataGeneration/postgres/data/songsAsync')
@@ -61,13 +61,13 @@ readdirAsync(__dirname + '/../dataGeneration/postgres/data/songsAsync')
     files.forEach(file => {
       if (file.includes('data')) {
         var path = `/Users/davidhong/Desktop/HackReactor/SDC/davy-album-player/dataGeneration/postgres/data/songsAsync/${file}`;
-        console.log(path);
+        // console.log(path);
         CopyQuery(`COPY "SONGS" (id, name, streams, length, popularity, addedtolibrary, album_id) FROM '${path}' DELIMITER ',' CSV HEADER;`);
       }
     });
   })
   .catch(err => {
-    console.log(error);
+    // console.log(error);
   });
 
 var query = 'SELECT * FROM "ALBUMS","SONGS" WHERE "ALBUMS".artist_id = 10010000 AND "ALBUMS".id = "SONGS".album_id;'; // .900ms

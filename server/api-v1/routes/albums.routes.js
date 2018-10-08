@@ -20,8 +20,8 @@ albumsRouter.delete('/:albumID', albumsController.oneAlbum.DELETE);
 albumsRouter.use(
   '/:albumID/songs',
   (req, res, next) => {
-    console.log(req.params);
-    console.log('LOGGING FROM albumsRouter - TO ARTISTS ROUTER');
+    // console.log(req.params);
+    // console.log('LOGGING FROM albumsRouter - TO ARTISTS ROUTER');
     next();
   },
   songsRouter

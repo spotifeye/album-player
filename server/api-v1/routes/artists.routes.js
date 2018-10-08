@@ -15,7 +15,7 @@ artistsRouter.all('/', (req, res) => {
 artistsRouter.use(
   '/:artistID/albums',
   (req, res, next) => {
-    console.log('LOGGING FROM artistsRouter - TO ARTISTS ROUTER');
+    // console.log('LOGGING FROM artistsRouter - TO ARTISTS ROUTER');
     next();
   },
   albumsRouter

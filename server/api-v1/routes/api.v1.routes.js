@@ -16,7 +16,7 @@ apiV1Router.all('/', (req, res) => {
 apiV1Router.use(
   '/artists',
   (req, res, next) => {
-    console.log('LOGGING FROM HOST - DELEGATING TO ARTISTS ROUTER');
+    // console.log('LOGGING FROM HOST - DELEGATING TO ARTISTS ROUTER');
     next();
   },
   artistsRouter
