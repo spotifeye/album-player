@@ -1,3 +1,4 @@
+require('newrelic');
 const server = require('./server.js');
 // const cluster = require('cluster');
 // const numCPUs = require('os').cpus().length;

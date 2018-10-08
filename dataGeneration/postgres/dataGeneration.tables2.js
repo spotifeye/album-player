@@ -30,22 +30,26 @@ let songTemplate = {
 var writeOneFile = function(fileID, sizeEachFile) {
   return new Promise((resolve, reject) => {
     // Initiate writeStream
-    let artistStream = fs.createWriteStream(__dirname + `/data2/artists/data${fileID}.csv`);
-    let albumStream = fs.createWriteStream(__dirname + `/data2/albums/data${fileID}.csv`);
-    let songStream = fs.createWriteStream(__dirname + `/data2/songs/data${fileID}.csv`);
+    // let artistStream = fs.createWriteStream(__dirname + `/data2/artists/data${fileID}.csv`);
+    // let albumStream = fs.createWriteStream(__dirname + `/data2/albums/data${fileID}.csv`);
+    // let songStream = fs.createWriteStream(__dirname + `/data2/songs/data${fileID}.csv`);
 
-    artistStream.write(Object.keys(artistTemplate).join(',') + '\n');
-    albumStream.write(Object.keys(albumTemplate).join(',') + '\n');
-    songStream.write(Object.keys(songTemplate).join(',') + '\n');
+    // artistStream.write(Object.keys(artistTemplate).join(',') + '\n');
+    // albumStream.write(Object.keys(albumTemplate).join(',') + '\n');
+    // songStream.write(Object.keys(songTemplate).join(',') + '\n');
+
+    var artistCSV = [Object.keys(artistTemplate).join(',')];
+    var albumCSV = [Object.keys(albumTemplate).join(',')];
+    var songCSV = [Object.keys(songTemplate).join(',')];
 
     for (let i = fileID * sizeEachFile + 10000000; i < (fileID + 1) * sizeEachFile + 10000000; i++) {
       let artist = {
         artistID: i,
         artistName: faker.name.findName()
       };
-      artistStream.write(Object.values(artist).join(',') + '\n');
+      artistCSV.push(Object.values(artist).join(','));
 
-      var albumCount = faker.random.number({ min: 1, max: 3 });
+      var albumCount = faker.random.number({ min: 2, max: 3 });
       var start = faker.random.number({ min: 1, max: 996 });
       for (let j = 1; j <= albumCount + 1; j++) {
         let album = {
@@ -58,8 +62,8 @@ var writeOneFile = function(fileID, sizeEachFile) {
         while (album.albumName.includes(',')) {
           album.albumName = faker.random.word() + ' ' + faker.random.word();
         }
-        albumStream.write(Object.values(album).join(',') + '\n');
-        var songNumber = faker.random.number({ min: 1, max: 3 });
+        albumCSV.push(Object.values(album).join(','));
+        var songNumber = faker.random.number({ min: 2, max: 4 });
         for (let k = 1; k <= songNumber; k++) {
           let song = {
             songID: artist.artistID * 100 + album.albumID * 10 + k,
@@ -73,17 +77,15 @@ var writeOneFile = function(fileID, sizeEachFile) {
           while (song.songName.includes(',')) {
             song.songName = faker.random.word() + ' ' + faker.random.word();
           }
-          songStream.write(Object.values(song).join(',') + '\n');
+          songCSV.push(Object.values(song).join(','));
         }
       }
     }
-    artistStream.end(() => {
-      albumStream.end(() => {
-        songStream.end(() => {
-          resolve(fileID + 1);
-        });
-      });
-    });
+    // Write Files
+    fs.writeFileSync(__dirname + `/data2/artists/data${fileID}.csv`, artistCSV.join('\n'));
+    fs.writeFileSync(__dirname + `/data2/albums/data${fileID}.csv`, albumCSV.join('\n'));
+    fs.writeFileSync(__dirname + `/data2/songs/data${fileID}.csv`, songCSV.join('\n'));
+    resolve(fileID + 1);
   });
 };
 
