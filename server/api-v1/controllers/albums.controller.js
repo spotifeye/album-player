@@ -5,6 +5,9 @@ module.exports = {
   allAlbums: {
     GET(req, res) {
       DB.GET.ALBUMS(req.params.artistID, (error, albums) => {
+        // console.log('ERROR', error);
+        // console.log('ALBUMS', albums);
+
         if (error || albums.length === 0) {
           res.sendStatus(404);
         } else {

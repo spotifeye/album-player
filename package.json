@@ -11,7 +11,7 @@
     "start": "nodemon server/index.js",
     "mon-server": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
-    "react-prod": "webpack --watch",
+    "react-prod": "webpack",
     "gen-data": "node --max-old-space-size=6384 dataGeneration/postgres/dataGeneration.tables.js",
     "seed-data": "node seedDatabase.js",
     "test": "jest",

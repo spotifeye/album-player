@@ -9,7 +9,8 @@ module.exports = {
         var artist = artist[0];
         artist.albums = albums;
         for (let i = 0; i < albums.length; i++) {
-          albums[i].songs = await FIND.songs(albums[i].id);
+          console.log();
+          albums[i].songs = await FIND.songs(albums[i].albumID);
         }
         // this gives the following structure: artist = {..., albums:[song{...},song{...}, ... ]}
         callback(null, artist);
@@ -18,10 +19,14 @@ module.exports = {
       }
     },
     ALBUM: async (albumID, callback) => {
-      var album = await FIND.album(albumID);
-      album.songs = await FIND.songs(album.id);
-      // this gives the following structure: album = {..., songs:[Array]}
-      callback(album);
+      try {
+        var album = await FIND.album(albumID);
+        album.songs = await FIND.songs(album.albumID);
+        // this gives the following structure: album = {..., songs:[Array]}
+        callback(null, album);
+      } catch (error) {
+        callback(error);
+      }
     },
     SONGS: (albumID, callback) =>
       FIND.songs(albumID)
