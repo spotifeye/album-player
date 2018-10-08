@@ -49,6 +49,7 @@ export default function() {
   let res = http.get(`http://localhost:3001/api/v1/artists/${id}\albums`);
   check(res, {
     'status was 200': r => r.status == 200,
+    'server under load threshold': r => r.status !== 503,
     'transaction time OK': r => r.timings.duration < 1000
   });
   sleep(1);
