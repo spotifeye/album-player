@@ -5,7 +5,12 @@ const artistsRouter = express.Router();
 const albumsRouter = require('./albums.routes.js');
 
 artistsRouter.all('/', (req, res) => {
-  res.status(200).send('Nothing Interesting Here - ARTISTS');
+  res.status(200).send({
+    albums: './{artist}/albums',
+    album: './{artist}/albums/{album}',
+    songs: './{artist}/albums/{album}/songs/',
+    song: './{artist}/albums/{album}/song/{songID}'
+  });
 });
 
 artistsRouter.use(

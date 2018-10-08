@@ -1,10 +1,20 @@
-const postgresModel = require('../models/postgres.model.js');
-const mySQLModel = require('../models/mysql.model.js');
+const DB = require('../models/postgres.model.js');
 
 module.exports = {
   allAlbums: {
     GET(req, res) {
-      res.send('LOGGING GET FROM albumsRouter');
+      console.log('ALBUMS GET', req.params);
+
+      DB.GET.ALBUMS(req.params.artistID, (error, albums) => {
+        if (error) {
+          res.sendStatus(500);
+        }
+        if (albums.length === 0) {
+          res.sendStatus(404);
+        } else {
+          res.send(albums);
+        }
+      });
       /* TODO: 
       If previously deleted
       status: 404 NOT FOUND
@@ -12,6 +22,7 @@ module.exports = {
       status: 400 BAD REQUEST
       status: 200 OK  // FIXME: 404 if query did not find.
       data: [album 1, album2, ... album n]*/
+      // DB.GET.ALBUMS();
     },
     POST(req, res) {
       res.send('LOGGING POST FROM albumsRouter');
@@ -24,11 +35,6 @@ module.exports = {
       // 405 Method Not Allowed: no practical use case to swap out the entire album library of an artist
       res.sendStatus(405);
     },
-    PATCH(req, res) {
-      // 405 Method Not Allowed:
-      // redundant to PUT/api/v1/artists/:artistID/albums/:albumID
-      res.sendStatus(405);
-    },
     DELETE(req, res) {
       // 405 Method Not Allowed: disallow deleting all albums by accident
       res.sendStatus(405);
@@ -37,6 +43,7 @@ module.exports = {
   oneAlbum: {
     GET(req, res) {
       res.send('LOGGING GET FROM albumsRouter - ID');
+      console.log('ALBUMS GET', req.params);
       /* TODO:
       If previously deleted
       status: 404 NOT FOUND
@@ -59,15 +66,6 @@ module.exports = {
       status: 200 OK
       swap out the target album of an artist
       request data shall provide a whole info*/
-    },
-    PATCH(req, res) {
-      res.send('LOGGING PATCH FROM albumsRouter - ID');
-      /* TODO:
-      If previously deleted
-      status: 404 NOT FOUND
-      If no matching albumID found
-      status: 400 BAD REQUEST
-      status: 200 OK */
     },
     DELETE(req, res) {
       res.send('LOGGING DELETE FROM albumsRouter - ID');
