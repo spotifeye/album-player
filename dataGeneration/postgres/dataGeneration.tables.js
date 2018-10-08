@@ -55,7 +55,7 @@ var writeOneFile = function(fileID, sizeEachFile) {
           publishedYear: faker.random.number({ min: 1950, max: 2018 }),
           artist_id: artist.id
         };
-        while (album.name.includes(',')) {
+        while (album.albumName.includes(',')) {
           album.name = faker.random.word() + ' ' + faker.random.word();
         }
         albumStream.write(Object.values(album).join(',') + '\n');
@@ -71,7 +71,7 @@ var writeOneFile = function(fileID, sizeEachFile) {
             addedToLibrary: faker.random.boolean(),
             album_id: album.id
           };
-          while (song.name.includes(',')) {
+          while (song.songName.includes(',')) {
             song.name = faker.random.word() + ' ' + faker.random.word();
           }
           songStream.write(Object.values(song).join(',') + '\n');

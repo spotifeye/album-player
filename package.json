@@ -16,7 +16,6 @@
     "seed-data": "node seedDatabase.js",
     "test": "jest",
     "server-profile": "NODE_ENV=production node --prof server/index.js",
-    "curl-albums": "curl -X GET 'http://localhost:3001/api/v1/artists/100/albums/'",
     "apache-bench": "ab  -k -c 1000 -n 100000  'http://localhost:3001/api/v1/artists/100/albums/'"
   },
   "dependencies": {

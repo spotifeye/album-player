@@ -14,8 +14,8 @@ module.exports = {
     },
     POST(req, res) {
       let expectedBody = {
-        name: 'string',
-        image: 'string',
+        albumName: 'string',
+        albumImage: 'string',
         publishedYear: 'number',
         artist_id: 'number'
       };
@@ -63,25 +63,21 @@ module.exports = {
     },
     PUT(req, res) {
       let expectedBody = {
-        name: 'string',
-        streams: 'number',
-        length: 'number',
-        popularity: 'number',
-        addedToLibrary: 'boolean'
+        albumName: 'string',
+        albumImage: 'string',
+        publishedYear: 'number'
       };
-      DB.GET.ALBUM(req.params.albumID, (error, album) => {
-        if (album.length === 0) {
-          res.sendStatus(404);
-        } else {
-          if (!CheckReqBody(expectedBody, req.body)) {
-            res.sendStatus(400);
-          } else {
-            DB.UPDATE.ALBUM(req.body, (error, result) => {
-              err ? res.sendStatus(500) : res.status(200).send(`ALBUM ${req.params.albumID} UPDATED`);
-            });
-          }
-        }
-      });
+      !CheckReqBody(expectedBody, req.body)
+        ? res.sendStatus(400)
+        : DB.GET.ALBUM(req.params.albumID, (error, album) => {
+            if (album.length === 0) {
+              res.sendStatus(404);
+            } else {
+              DB.UPDATE.ALBUM(req.body, (error, result) => {
+                err ? res.sendStatus(500) : res.status(200).send(`ALBUM ${req.params.albumID} UPDATED`);
+              });
+            }
+          });
     },
     DELETE(req, res) {
       DB.GET.ALBUM(req.params.albumID, (error, album) => {
