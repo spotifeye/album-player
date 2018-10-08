@@ -12,26 +12,13 @@ server.use(bodyParser.json());
 server.use(cors());
 server.use(compression());
 server.use(express.urlencoded({ extended: true }));
-server.use(express.static(path.join(__dirname, '../public')));
+server.use('/', express.static(path.join(__dirname, '../public')));
 
-// server.get('/artists/:artistID/albums/', (req, res) => {
-//   getArtist(req.params.artistID, data => {
-//     res.send(data);
-//   });
-// });
+server.use('/artists/:artistID', express.static(path.join(__dirname, '../public')));
 
 server.get('/', (req, res, next) => {
   res.send('LOGGING GET FROM HOST');
 });
-
-// server.use(
-//   '/api/artists',
-//   (req, res, next) => {
-//     console.log('LOGGING FROM HOST - DELEGATING TO ARTISTS ROUTER');
-//     next();
-//   },
-//   artistsRouter
-// );
 
 server.use(
   '/api/v1',

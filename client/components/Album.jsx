@@ -16,9 +16,9 @@ class Album extends React.Component {
       unsaveAll: false,
       library: [],
       dropdownOpen: false,
-      saveButton: "SAVE",
+      saveButton: 'SAVE',
       playing: false
-    }
+    };
     this.toggle = this.toggle.bind(this);
   }
 
@@ -35,7 +35,7 @@ class Album extends React.Component {
     }
     this.setState({
       library: songsInLibrary
-    })
+    });
   }
 
   componentDidUpdate() {
@@ -46,7 +46,7 @@ class Album extends React.Component {
       }
       this.setState({
         library: songsInLibrary
-      })
+      });
     }
   }
 
@@ -55,21 +55,21 @@ class Album extends React.Component {
       this.setState({
         songPlayingID: 0,
         playing: false
-      })
+      });
     } else if (newProps.albumPlaying === this.props.id) {
       this.setState({
         songPlayingID: newProps.songPlayingID,
         playing: true
-      })
+      });
     }
   }
 
   handleLibraryClick(id, status) {
     var newLibrary = this.state.library;
-    newLibrary[id-1] = status;
+    newLibrary[id - 1] = status;
     this.setState({
       library: newLibrary
-    })
+    });
   }
 
   buildSongs() {
@@ -78,31 +78,32 @@ class Album extends React.Component {
       return songs;
     }
     for (var i = 0; i < this.props.album.songs.length; i++) {
-      songs.push(
-        <Song id={i + 1} 
-              song={this.props.album.songs[i]} 
-              updateID={this.updateSongPlayingID.bind(this)}
-              songPlaying={this.state.songPlayingID}
-              originalAlbum={this.state.idElement}
-              albumPlaying={this.props.albumPlaying}
-              addedToLibrary={this.state.library[i]}
-              handleLibraryClick={this.handleLibraryClick.bind(this)}/>
-      )
+      songs.push(<Song id={i + 1} song={this.props.album.songs[i]} updateID={this.updateSongPlayingID.bind(this)} songPlaying={this.state.songPlayingID} originalAlbum={this.state.idElement} albumPlaying={this.props.albumPlaying} addedToLibrary={this.state.library[i]} handleLibraryClick={this.handleLibraryClick.bind(this)} />);
     }
     return songs;
   }
 
   updateSongPlayingID(id) {
     if (id === 0) {
-      this.setState({
-        songPlayingID: id,
-        playing: false
-      }, () => {this.props.update(0, 0)})
+      this.setState(
+        {
+          songPlayingID: id,
+          playing: false
+        },
+        () => {
+          this.props.update(0, 0);
+        }
+      );
     } else {
-      this.setState({
-        songPlayingID: id,
-        playing: true
-      }, () => {this.props.update(this.props.id, id)})
+      this.setState(
+        {
+          songPlayingID: id,
+          playing: true
+        },
+        () => {
+          this.props.update(this.props.id, id);
+        }
+      );
     }
   }
 
@@ -114,19 +115,19 @@ class Album extends React.Component {
       }
       this.setState({
         saveClicked: true,
-        saveButton: "SAVED",
+        saveButton: 'SAVED',
         library: newLib
-      })
-    } else if (!this.state.saveClicked && this.state.unsaveAll){
+      });
+    } else if (!this.state.saveClicked && this.state.unsaveAll) {
       for (var i = 0; i < this.props.album.songs.length; i++) {
         newLib.push(true);
       }
       this.setState({
         saveClicked: true,
         unsaveAll: false,
-        saveButton: "SAVED",
+        saveButton: 'SAVED',
         library: newLib
-      })
+      });
     } else {
       for (var i = 0; i < this.props.album.songs.length; i++) {
         newLib.push(false);
@@ -134,31 +135,45 @@ class Album extends React.Component {
       this.setState({
         saveClicked: false,
         unsaveAll: true,
-        saveButton: "SAVE",
+        saveButton: 'SAVE',
         library: newLib
-      })
+      });
     }
   }
 
   playbuttonAlbumCover() {
     if (this.state.playing) {
-      return <div className={albCss.middlealbumimagetext} onClick={this.handleAlbumImagePlayClick.bind(this)}><FontAwesomeIcon icon={faPauseCircle} size="5x"/></div>
+      return (
+        <div className={albCss.middlealbumimagetext} onClick={this.handleAlbumImagePlayClick.bind(this)}>
+          <FontAwesomeIcon icon={faPauseCircle} size="5x" />
+        </div>
+      );
     } else {
-      return <div className={albCss.middlealbumimagetext} onClick={this.handleAlbumImagePlayClick.bind(this)}><FontAwesomeIcon icon={faPlayCircle} size="5x"/></div>
+      return (
+        <div className={albCss.middlealbumimagetext} onClick={this.handleAlbumImagePlayClick.bind(this)}>
+          <FontAwesomeIcon icon={faPlayCircle} size="5x" />
+        </div>
+      );
     }
   }
 
   handleAlbumImagePlayClick() {
     if (this.state.playing) {
-      this.setState({
-        songPlayingID: 0,
-        playing: false
-      }, () => this.props.update(0, 0))
+      this.setState(
+        {
+          songPlayingID: 0,
+          playing: false
+        },
+        () => this.props.update(0, 0)
+      );
     } else {
-      this.setState({
-        songPlayingID: 1,
-        playing: true
-      }, () => this.props.update(this.props.id, 1))
+      this.setState(
+        {
+          songPlayingID: 1,
+          playing: true
+        },
+        () => this.props.update(this.props.id, 1)
+      );
     }
   }
 
@@ -166,55 +181,73 @@ class Album extends React.Component {
     return (
       <div>
         <div className={albCss.albumheader}>
-          <p style={{float: "left", marginTop: "16px"}}>
+          <p style={{ float: 'left', marginTop: '16px' }}>
             <div className={albCss.containeralbumimageplay}>
-              <img src={this.props.album.albumImage} width="140" height="140"  border="1px" className={albCss.albumimage}/>
-              <div className={albCss.middlealbumimage}>
-                {this.playbuttonAlbumCover()}
-              </div>
+              <img src={this.props.album.albumImage} width="140" height="140" border="1px" className={albCss.albumimage} />
+              <div className={albCss.middlealbumimage}>{this.playbuttonAlbumCover()}</div>
             </div>
           </p>
           <p id={albCss.publishedyear}>
-            <br/>
+            <br />
             <div>{this.props.album.publishedYear}</div>
             <div id={albCss.albumtitle}>{this.props.album.albumName}</div>
-            {this.state.saveButton === "SAVED" ?
-              <button type="button" id={albCss.spfybtn} onClick={this.handleSaveClick.bind(this)} style={{color: 'rgb(29,185,84)'}}>SAVED</button>
-              :
-              <button type="button" id={albCss.spfybtn} onClick={this.handleSaveClick.bind(this)}>SAVE</button>
-            }
-            <Dropdown trigger={['click']} overlay={
-              <Menu>
-                <MenuItem key="1">Add to Queue</MenuItem>
-                <MenuItem key="2">Go to Album Radio</MenuItem>
-                <MenuItem disabled>Go to Artist</MenuItem>
-                <Divider />
-                <MenuItem key="3" onClick={this.handleSaveClick.bind(this)}>Save to Your Library</MenuItem>
-                <MenuItem key="4">Add to Playlist</MenuItem>
-                <Divider />
-                <MenuItem key="5">Share</MenuItem>
-              </Menu>
-            } animation="slide-up">
-              <button className={albCss.dropdown} type="button" id={albCss.spfybtnround}>...</button>
+            {this.state.saveButton === 'SAVED' ? (
+              <button type="button" id={albCss.spfybtn} onClick={this.handleSaveClick.bind(this)} style={{ color: 'rgb(29,185,84)' }}>
+                SAVED
+              </button>
+            ) : (
+              <button type="button" id={albCss.spfybtn} onClick={this.handleSaveClick.bind(this)}>
+                SAVE
+              </button>
+            )}
+            <Dropdown
+              trigger={['click']}
+              overlay={
+                <Menu>
+                  <MenuItem key="1">Add to Queue</MenuItem>
+                  <MenuItem key="2">Go to Album Radio</MenuItem>
+                  <MenuItem disabled>Go to Artist</MenuItem>
+                  <Divider />
+                  <MenuItem key="3" onClick={this.handleSaveClick.bind(this)}>
+                    Save to Your Library
+                  </MenuItem>
+                  <MenuItem key="4">Add to Playlist</MenuItem>
+                  <Divider />
+                  <MenuItem key="5">Share</MenuItem>
+                </Menu>
+              }
+              animation="slide-up"
+            >
+              <button className={albCss.dropdown} type="button" id={albCss.spfybtnround}>
+                ...
+              </button>
             </Dropdown>
           </p>
         </div>
-        <br/>
+        <br />
         <table className={albCss.mainTable}>
           <tbody>
             <tr className={albCss.mainTableRow}>
-              <th className={albCss.mainTableHeader} width="30">#</th>
-              <th className={albCss.mainTableHeader} width="50"></th>
-              <th className={albCss.mainTableHeader} id={albCss.songnametitle}>TITLE</th>
-              <th className={albCss.mainTableHeader} width="30"><FontAwesomeIcon icon={faClock} size="lg"/></th>
-              <th className={albCss.mainTableHeader} width="50"><FontAwesomeIcon icon={faThumbsUp} size="lg"/></th>
+              <th className={albCss.mainTableHeader} width="30">
+                #
+              </th>
+              <th className={albCss.mainTableHeader} width="50" />
+              <th className={albCss.mainTableHeader} id={albCss.songnametitle}>
+                TITLE
+              </th>
+              <th className={albCss.mainTableHeader} width="30">
+                <FontAwesomeIcon icon={faClock} size="lg" />
+              </th>
+              <th className={albCss.mainTableHeader} width="50">
+                <FontAwesomeIcon icon={faThumbsUp} size="lg" />
+              </th>
             </tr>
             {this.buildSongs()}
           </tbody>
         </table>
-        <br/>
+        <br />
       </div>
-    )
+    );
   }
 }
 

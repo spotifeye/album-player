@@ -6,23 +6,23 @@ const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 
 let artistTemplate = {
-  id: undefined,
-  name: undefined
+  artistID: undefined,
+  artistName: undefined
 };
 let albumTemplate = {
-  id: undefined,
-  name: undefined,
-  image: undefined,
-  publishedyear: undefined,
+  albumID: undefined,
+  albumName: undefined,
+  albumImage: undefined,
+  publishedYear: undefined,
   artist_id: undefined
 };
 let songTemplate = {
-  id: undefined,
-  name: undefined,
+  songID: undefined,
+  songName: undefined,
   streams: undefined,
   length: undefined,
   popularity: undefined,
-  addedtolibrary: undefined,
+  addedToLibrary: undefined,
   album_id: undefined
 };
 
@@ -40,8 +40,8 @@ var writeOneFile = function(fileID, sizeEachFile) {
 
     for (let i = fileID * sizeEachFile + 10000000; i < (fileID + 1) * sizeEachFile + 10000000; i++) {
       let artist = {
-        id: i,
-        name: faker.name.findName()
+        artistID: i,
+        artistName: faker.name.findName()
       };
       artistStream.write(Object.values(artist).join(',') + '\n');
 
@@ -49,10 +49,10 @@ var writeOneFile = function(fileID, sizeEachFile) {
       var start = faker.random.number({ min: 1, max: 996 });
       for (let j = 1; j <= albumCount + 1; j++) {
         let album = {
-          id: artist.id * 10 + j,
-          name: faker.random.words(),
-          image: `https://s3-us-west-1.amazonaws.com/sdc-spotifeye/photos/${start + j}.jpg`,
-          publishedyear: faker.random.number({ min: 1950, max: 2018 }),
+          albumID: artist.id * 10 + j,
+          albumName: faker.random.words(),
+          albumImage: `https://s3-us-west-1.amazonaws.com/sdc-spotifeye/photos/${start + j}.jpg`,
+          publishedYear: faker.random.number({ min: 1950, max: 2018 }),
           artist_id: artist.id
         };
         while (album.name.includes(',')) {
@@ -63,12 +63,12 @@ var writeOneFile = function(fileID, sizeEachFile) {
         var songNumber = faker.random.number({ min: 1, max: 3 });
         for (let k = 1; k <= songNumber; k++) {
           let song = {
-            id: artist.id * 100 + album.id * 10 + k,
-            name: faker.random.words(),
+            songID: artist.id * 100 + album.id * 10 + k,
+            songName: faker.random.words(),
             streams: faker.random.number({ min: 50000, max: 100000000 }),
             length: faker.random.number({ min: 180, max: 250 }),
             popularity: faker.random.number({ min: 1, max: 10 }),
-            addedtolibrary: faker.random.boolean(),
+            addedToLibrary: faker.random.boolean(),
             album_id: album.id
           };
           while (song.name.includes(',')) {

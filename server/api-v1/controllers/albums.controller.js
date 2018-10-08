@@ -8,8 +8,7 @@ module.exports = {
         if (error || albums.length === 0) {
           res.sendStatus(404);
         } else {
-          var data = { albums };
-          res.status(200).send(data);
+          res.status(200).send(albums);
         }
       });
     },

@@ -1,8 +1,8 @@
 import React from 'react';
-import $ from 'jquery';
 import Album from './Album.jsx';
 import Player from './Player.jsx';
 import appCss from '../css_components/App.css';
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,27 +15,24 @@ class App extends React.Component {
       albumPlayingID: 0,
       songPlayingID: 0
     };
-    var artistId = Math.floor(Math.random() * 100) + 1;
+    var artistId = window.location.pathname.split('/').slice(-2)[0] || Math.floor(Math.random() * 2000000) + 10000000;
     this.getAllArtists(artistId);
   }
 
   componentDidMount() {
-    var artistId = Math.floor(Math.random() * 100) + 1;
+    var artistId = window.location.pathname.split('/').slice(-2)[0] || Math.floor(Math.random() * 2000000) + 10000000;
     this.getAllArtists(artistId);
   }
 
   getAllArtists(artistId) {
-    $.ajax({
-      method: 'GET',
-      url: `/api/v1/artists/${artistId}/albums/`,
-      success: data => {
-        this.setState({
-          artist: data[0],
-          artistID: artistId,
-          artistName: data[0].artistName,
-          albums: data[0].albums
-        });
-      }
+    axios.get(`/api/v1/artists/${artistId}/albums`).then(({ data }) => {
+      console.log(data);
+      this.setState({
+        artist: data,
+        artistID: artistId,
+        artistName: data.artistName,
+        albums: data.albums
+      });
     });
   }
 
