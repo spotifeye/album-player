@@ -1,35 +1,38 @@
 const DB = require('../models/postgres.model.js');
+const CheckReqBody = require('./CheckReqBody');
 
 module.exports = {
   allAlbums: {
     GET(req, res) {
-      console.log('ALBUMS GET', req.params);
-
       DB.GET.ALBUMS(req.params.artistID, (error, albums) => {
-        if (error) {
-          res.sendStatus(500);
-        }
-        if (albums.length === 0) {
+        if (error || albums.length === 0) {
           res.sendStatus(404);
         } else {
-          res.send(albums);
+          var data = { albums };
+          res.status(200).send(data);
         }
       });
-      /* TODO: 
-      If previously deleted
-      status: 404 NOT FOUND
-      If no matching albumID found
-      status: 400 BAD REQUEST
-      status: 200 OK  // FIXME: 404 if query did not find.
-      data: [album 1, album2, ... album n]*/
-      // DB.GET.ALBUMS();
     },
     POST(req, res) {
-      res.send('LOGGING POST FROM albumsRouter');
-      /* TODO:
-      status: 201 Created
-      creates an album with all the nested info
-      location: albums/[newID]*/
+      let expectedBody = {
+        name: 'string',
+        image: 'string',
+        publishedYear: 'number',
+        artist_id: 'number'
+      };
+      DB.GET.Artist(req.body.artist_id, (error, artist) => {
+        if (error || artist.length === 0) {
+          res.sendStatus(404);
+        } else {
+          if (!CheckReqBody(expectedBody, req.body)) {
+            res.sendStatus(400);
+          } else {
+            DB.ADD.ALBUM(req.body, (error, data) => {
+              error ? res.sendStatus(404) : res.sendStatus(201);
+            });
+          }
+        }
+      });
     },
     PUT(req, res) {
       // 405 Method Not Allowed: no practical use case to swap out the entire album library of an artist
@@ -42,40 +45,55 @@ module.exports = {
   },
   oneAlbum: {
     GET(req, res) {
-      res.send('LOGGING GET FROM albumsRouter - ID');
-      console.log('ALBUMS GET', req.params);
-      /* TODO:
-      If previously deleted
-      status: 404 NOT FOUND
-      If no matching albumID found
-      status: 400 BAD REQUEST
-      status: 200 OK
-      data: [album id=albumID]*/
+      DB.GET.ALBUM(req.params.albumID, (error, album) => {
+        if (error) {
+          res.sendStatus(404);
+        } else {
+          if (album.length === 0) {
+            res.sendStatus(404);
+          } else {
+            var data = { album };
+            res.status(200).send(data);
+          }
+        }
+      });
     },
     POST(req, res) {
       // 405 Method Not Allowed: can't post to a specific album
       res.sendStatus(405);
     },
     PUT(req, res) {
-      res.send('LOGGING PUT FROM albumsRouter - ID');
-      /* TODO:  
-      If previously deleted
-      status: 404 NOT FOUND
-      If no matching albumID found
-      status: 400 BAD REQUEST
-      status: 200 OK
-      swap out the target album of an artist
-      request data shall provide a whole info*/
+      let expectedBody = {
+        name: 'string',
+        streams: 'number',
+        length: 'number',
+        popularity: 'number',
+        addedToLibrary: 'boolean'
+      };
+      DB.GET.ALBUM(req.params.albumID, (error, album) => {
+        if (album.length === 0) {
+          res.sendStatus(404);
+        } else {
+          if (!CheckReqBody(expectedBody, req.body)) {
+            res.sendStatus(400);
+          } else {
+            DB.UPDATE.ALBUM(req.body, (error, result) => {
+              err ? res.sendStatus(500) : res.status(200).send(`ALBUM ${req.params.albumID} UPDATED`);
+            });
+          }
+        }
+      });
     },
     DELETE(req, res) {
-      res.send('LOGGING DELETE FROM albumsRouter - ID');
-      /* TODO: If no matching albumID found
-      status: 400 BAD REQUEST
-      If previously deleted
-      status: 404 NOT FOUND
-      els
-      status: 418 I'm a teapot
-      change all the values to null */
+      DB.GET.ALBUM(req.params.albumID, (error, album) => {
+        if (album.length === 0) {
+          res.sendStatus(404);
+        } else {
+          DB.DELETE.ALBUM(req.params.albumID, (error, result) => {
+            res.status(418).send(`ALBUM ${req.params.albumID} DELETED`);
+          });
+        }
+      });
     }
   }
 };

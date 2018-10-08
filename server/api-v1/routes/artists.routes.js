@@ -1,6 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
 const artistsRouter = express.Router();
 const albumsRouter = require('./albums.routes.js');
 
@@ -13,6 +11,7 @@ artistsRouter.all('/', (req, res) => {
   });
 });
 
+// Attaching albums router
 artistsRouter.use(
   '/:artistID/albums',
   (req, res, next) => {
@@ -21,5 +20,6 @@ artistsRouter.use(
   },
   albumsRouter
 );
+
 
 module.exports = artistsRouter;

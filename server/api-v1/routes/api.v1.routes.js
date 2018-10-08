@@ -1,6 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
 const artistsRouter = require('./artists.routes.js');
 const apiV1Router = express.Router();
 

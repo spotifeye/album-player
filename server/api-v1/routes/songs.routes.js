@@ -1,6 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
 const songsRouter = express.Router({ mergeParams: true });
 const songsController = require('../controllers/songs.controller.js');
 
@@ -15,5 +13,12 @@ songsRouter.put('/:songID', songsController.oneSong.PUT);
 
 songsRouter.delete('/', songsController.allSongs.DELETE);
 songsRouter.delete('/:songID', songsController.oneSong.DELETE);
+
+songsRouter.all('/', (req, res) => {
+  res.sendStatus(405);
+});
+songsRouter.all('/:songID', (req, res) => {
+  res.sendStatus(405);
+});
 
 module.exports = songsRouter;

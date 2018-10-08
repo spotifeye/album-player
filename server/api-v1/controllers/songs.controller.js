@@ -5,7 +5,7 @@ module.exports = {
   allSongs: {
     GET(req, res) {
       DB.GET.SONGS(req.params.albumID, (error, songs) => {
-        if (error) {
+        if (error || songs.length === 0) {
           res.sendStatus(404);
         } else {
           var data = { songs };
@@ -54,8 +54,7 @@ module.exports = {
           if (song.length === 0) {
             res.sendStatus(404);
           } else {
-            var data = {};
-            data.song = song;
+            var data = { song };
             res.status(200).send(data);
           }
         }

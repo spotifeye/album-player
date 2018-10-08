@@ -1,10 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const path = require('path');
-var albumsRouter = express.Router({ mergeParams: true });
+const albumsRouter = express.Router({ mergeParams: true });
 const songsRouter = require('./songs.routes.js');
 const albumsController = require('../controllers/albums.controller.js');
 
+// Defined Methods
 albumsRouter.get('/', albumsController.allAlbums.GET);
 albumsRouter.get('/:albumID', albumsController.oneAlbum.GET);
 
@@ -17,6 +16,7 @@ albumsRouter.put('/:albumID', albumsController.oneAlbum.PUT);
 albumsRouter.delete('/', albumsController.allAlbums.DELETE);
 albumsRouter.delete('/:albumID', albumsController.oneAlbum.DELETE);
 
+// Attaching songsRouter
 albumsRouter.use(
   '/:albumID/songs',
   (req, res, next) => {
@@ -26,5 +26,14 @@ albumsRouter.use(
   },
   songsRouter
 );
+
+// Error Handling for Undefined Methods
+albumsRouter.all('/', (req, res) => {
+  res.sendStatus(405);
+});
+
+albumsRouter.all('/:albumID', (req, res) => {
+  res.sendStatus(405);
+});
 
 module.exports = albumsRouter;
