@@ -2,13 +2,13 @@ const DB = require('../models/postgres.model.js');
 const CheckReqBody = require('./CheckReqBody');
 
 module.exports = {
-  allAlbums: {
+  allSongs: {
     GET(req, res) {
-      DB.GET.ALBUMS(req.params.artistID, (error, albums) => {
-        if (error || albums.length === 0) {
+      DB.GET.SONGS(req.params.albumID, (error, songs) => {
+        if (error || songs.length === 0) {
           res.sendStatus(404);
         } else {
-          var data = { albums };
+          var data = { songs };
           res.status(200).send(data);
         }
       });
@@ -16,18 +16,20 @@ module.exports = {
     POST(req, res) {
       let expectedBody = {
         name: 'string',
-        image: 'string',
-        publishedYear: 'number',
-        artist_id: 'number'
+        streams: 'number',
+        length: 'number',
+        popularity: 'number',
+        addedToLibrary: 'boolean',
+        album_id: 'number'
       };
-      DB.GET.Artist(req.body.artist_id, (error, artist) => {
-        if (error || artist.length === 0) {
+      DB.GET.ALBUM(req.body.album_id, (error, album) => {
+        if (error || album.length === 0) {
           res.sendStatus(404);
         } else {
           if (!CheckReqBody(expectedBody, req.body)) {
             res.sendStatus(400);
           } else {
-            DB.ADD.ALBUM(req.body, (error, data) => {
+            DB.ADD.SONG(req.body, (error, data) => {
               error ? res.sendStatus(404) : res.sendStatus(201);
             });
           }
@@ -35,31 +37,31 @@ module.exports = {
       });
     },
     PUT(req, res) {
-      // 405 Method Not Allowed: no practical use case to swap out the entire album library of an artist
+      // 405 Method Not Allowed: no practical use case to swap out the entire song list
       res.sendStatus(405);
     },
     DELETE(req, res) {
-      // 405 Method Not Allowed: disallow deleting all albums by accident
+      // 405 Method Not Allowed: disallow deleting all songs by accident
       res.sendStatus(405);
     }
   },
-  oneAlbum: {
+  oneSong: {
     GET(req, res) {
-      DB.GET.ALBUM(req.params.albumID, (error, album) => {
+      DB.GET.SONG(req.params.songID, (error, song) => {
         if (error) {
           res.sendStatus(404);
         } else {
-          if (album.length === 0) {
+          if (song.length === 0) {
             res.sendStatus(404);
           } else {
-            var data = { album };
+            var data = { song };
             res.status(200).send(data);
           }
         }
       });
     },
     POST(req, res) {
-      // 405 Method Not Allowed: can't post to a specific album
+      // 405 Method Not Allowed: can't post to a specific song
       res.sendStatus(405);
     },
     PUT(req, res) {
@@ -68,29 +70,30 @@ module.exports = {
         streams: 'number',
         length: 'number',
         popularity: 'number',
-        addedToLibrary: 'boolean'
+        addedToLibrary: 'boolean',
+        album_id: 'number'
       };
-      DB.GET.ALBUM(req.params.albumID, (error, album) => {
-        if (album.length === 0) {
+      DB.GET.SONG(req.params.songID, (error, song) => {
+        if (song.length === 0) {
           res.sendStatus(404);
         } else {
           if (!CheckReqBody(expectedBody, req.body)) {
             res.sendStatus(400);
           } else {
-            DB.UPDATE.ALBUM(req.body, (error, result) => {
-              err ? res.sendStatus(500) : res.status(200).send(`ALBUM ${req.params.albumID} UPDATED`);
+            DB.UPDATE.SONG(req.body, (error, result) => {
+              err ? res.sendStatus(500) : res.status(200).send(`SONG ${req.params.songID} UPDATED`);
             });
           }
         }
       });
     },
     DELETE(req, res) {
-      DB.GET.ALBUM(req.params.albumID, (error, album) => {
-        if (album.length === 0) {
+      DB.GET.SONG(req.params.songID, (error, song) => {
+        if (song.length === 0) {
           res.sendStatus(404);
         } else {
-          DB.DELETE.ALBUM(req.params.albumID, (error, result) => {
-            res.status(418).send(`ALBUM ${req.params.albumID} DELETED`);
+          DB.DELETE.SONG(req.params.songID, (error, result) => {
+            res.status(418).send(`SONG ${req.params.songID} DELETED`);
           });
         }
       });

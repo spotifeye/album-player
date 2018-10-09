@@ -69,7 +69,7 @@ npm install
 ### GET
 - /api/v1/artists/:artistID/albums
   - If previously deleted
-    - **status: 410** GONE
+    - **status: 404** NOT FOUND
   - If no matching albumID found
     - **status: 400** BAD REQUEST
   - **status: 200** OK 
@@ -77,7 +77,7 @@ npm install
 
 /api/v1/artists/:artistID/albums/:albumID
   - If previously deleted
-    - **status: 410** GONE
+    - **status: 404** NOT FOUND
   - If no matching albumID found
     - **status: 400** BAD REQUEST
   - **status: 200** OK
@@ -99,7 +99,7 @@ npm install
     - no practical use case to swap out the entire album library of an artist
 - /api/v1/artists/:artistID/albums/:albumID
   - If previously deleted
-    - **status: 410** GONE
+    - **status: 404** NOT FOUND
   - If no matching albumID found
     - **status: 400** BAD REQUEST
   - **status: 200** OK
@@ -114,7 +114,7 @@ npm install
     - redundant to PUT /api/v1/artists/:artistID/albums/:albumID
 - /api/v1/artists/:artistID/albums/:albumID
   - If previously deleted
-    - **status: 410** GONE
+    - **status: 404** NOT FOUND
   - If no matching albumID found
     - **status: 400** BAD REQUEST
   - **status: 200** OK
@@ -128,7 +128,7 @@ npm install
   - If no matching albumID found
     - **status: 400** BAD REQUEST
   - If previously deleted
-    - **status: 410** GONE
+    - **status: 404** NOT FOUND
   - **status: 418** I'm a teapot
     - change all the values to null
 

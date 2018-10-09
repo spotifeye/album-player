@@ -33,3 +33,11 @@ build/
 
 
 REST
+
+data1/
+data2/
+mongoDB-legacyCode/
+
+config/
+
+tempCodeRunnerFile.js

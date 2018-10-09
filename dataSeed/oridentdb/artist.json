@@ -1,0 +1,13 @@
+{
+  "source": { "file": { "path": "/Users/davidhong/Desktop/HackReactor/SDC/davy-album-player/dataGeneration/postgres/data/artistsAsync/data0.csv" } },
+  "extractor": { "csv": {} },
+  "transformers": [{ "vertex": { "class": "Artist" } }],
+  "loader": {
+    "orientdb": {
+      "dbURL": "plocal:../databases/spotifeye",
+      "dbType": "graph",
+      "classes": [{ "name": "Artist", "extends": "V" }],
+      "indexes": [{ "class": "Artist", "fields": ["id:integer", "name:"], "type": "UNIQUE" }, { "class": "Artist", "fields": ["name:string"], "type": "NOTUNIQUE" }]
+    }
+  }
+}
