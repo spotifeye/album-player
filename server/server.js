@@ -23,7 +23,7 @@ server.get('/', (req, res, next) => {
 server.use(
   '/api/v1',
   (req, res, next) => {
-    console.log('LOGGING FROM HOST - DELEGATING TO ARTISTS ROUTER');
+    // console.log('LOGGING FROM HOST - DELEGATING TO ARTISTS ROUTER');
     next();
   },
   apiV1Router

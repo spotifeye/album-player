@@ -2,51 +2,17 @@
 
 import http from 'k6/http';
 import { sleep, check } from 'k6';
-import faker from 'faker';
+// import faker from 'faker';
 
 export let options = {
-  stages: [
-    {
-      vus: 10,
-      rps: 10,
-      duration: '15s'
-    },
-    {
-      vus: 100,
-      rps: 10,
-      duration: '15s'
-    },
-    {
-      vus: 100,
-      rps: 100,
-      duration: '15s'
-    },
-    {
-      vus: 100,
-      rps: 500,
-      duration: '15s'
-    },
-    {
-      vus: 500,
-      rps: 500,
-      duration: '15s'
-    },
-    {
-      vus: 1000,
-      rps: 500,
-      duration: '15s'
-    },
-    {
-      vus: 1000,
-      rps: 1000,
-      duration: '15s'
-    }
-  ]
+  vus: 50,
+  rps: 100,
+  duration: '300s'
 };
 
 export default function() {
   var id = Math.ceil(Math.random() * 10000000 + 10000001);
-  let res = http.get(`http://localhost:3001/api/v1/artists/${id}\albums`);
+  let res = http.get(`http://localhost:3001/api/v1/artists/${id}/albums`);
   check(res, {
     'status was 200': r => r.status == 200,
     'server under load threshold': r => r.status !== 503,

@@ -5,6 +5,7 @@
  * See lib/config/default.js in the agent distribution for a more complete
  * description of configuration variables and their potential values.
  */
+console.log('Relic Key', process.env.NEWRELIC_KEY);
 exports.config = {
   /**
    * Array of application names.

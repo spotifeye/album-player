@@ -9,7 +9,6 @@ module.exports = {
         var artist = artist[0];
         artist.albums = albums;
         for (let i = 0; i < albums.length; i++) {
-          console.log();
           albums[i].songs = await FIND.songs(albums[i].albumID);
         }
         // this gives the following structure: artist = {..., albums:[song{...},song{...}, ... ]}
