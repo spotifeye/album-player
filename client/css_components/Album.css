@@ -1,66 +1,66 @@
-.mainTable {
+:global(.mainTable) {
   border-collapse: collapse;
   width: 100%;
 }
 
-.mainTableDest {
+:global(.mainTableDest) {
   height: 35px;
-  color: rgba(179,179,179);
+  color: rgba(179, 179, 179);
   text-align: center;
 }
 
-.mainTableHeader {
+:global(.mainTableHeader) {
   height: 30px;
   text-align: center;
   font-size: 8pt;
   color: gray;
 }
 
-.mainTable .mainTableDest {
+:global(.mainTable .mainTableDest) {
   border: 1px solid rgba(73, 73, 73, 0.288);
 }
 
-.mainTable .mainTableRow:first-child .mainTableDest {
+:global(.mainTable .mainTableRow:first-child .mainTableDest) {
   border-top: 0;
 }
 
-.mainTable .mainTableRow .mainTableDest {
+:global(.mainTable .mainTableRow .mainTableDest) {
   border-left: 0;
   border-right: 0;
 }
 
-#publishedyear {
-  color: rgba(179,179,179);
+:global(#publishedyear) {
+  color: rgba(179, 179, 179);
   font-size: 9pt;
   text-indent: 2em;
-  padding: 10px; 
+  padding: 10px;
 }
 
-#albumtitle {
+:global(#albumtitle) {
   color: white;
   font-size: 30pt;
   font-weight: bold;
 }
 
-#songname {
+:global(#songname) {
   color: whitesmoke;
   text-align: left;
 }
 
-#songnametitle {
+:global(#songnametitle) {
   text-align: left;
   font-weight: lighter;
 }
 
-#id {
+:global(#id) {
   font-size: 1pt;
 }
 
-#hoverelements:hover {
+:global(#hoverelements:hover) {
   background-color: #42414194;
 }
 
-#spfybtn {
+:global(#spfybtn) {
   background: transparent;
   border-radius: 500px;
   color: #fff;
@@ -77,18 +77,18 @@
   border: 0.5px solid #b3b3b3;
 }
 
-#spfybtn:focus {
+:global(#spfybtn:focus) {
   outline: 0;
 }
 
-#spfybtn:hover {
-  transform:scale(1.1,1.1);
-  -webkit-transform:scale(1.1,1.1);
-  -moz-transform:scale(1.1,1.1);
+:global(#spfybtn:hover) {
+  transform: scale(1.1, 1.1);
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1.1, 1.1);
   border: 1.4px solid white;
 }
 
-#spfybtnround {
+:global(#spfybtnround) {
   background: transparent;
   border-radius: 100%;
   color: #fff;
@@ -105,27 +105,27 @@
   border: 0.5px solid #b3b3b3;
 }
 
-#spfybtnround:focus {
-  transform:scale(1.1,1.1);
-  -webkit-transform:scale(1.1,1.1);
-  -moz-transform:scale(1.1,1.1);
+:global(#spfybtnround:focus) {
+  transform: scale(1.1, 1.1);
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1.1, 1.1);
   border: 1.4px solid white;
   outline: 0;
 }
 
-#spfybtnround:hover {
-  transform:scale(1.1,1.1);
-  -webkit-transform:scale(1.1,1.1);
-  -moz-transform:scale(1.1,1.1);
+:global(#spfybtnround:hover) {
+  transform: scale(1.1, 1.1);
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1.1, 1.1);
   border: 1.4px solid white;
 }
 
-.dropdown {
+:global(.dropdown) {
   position: relative;
   display: inline-block;
 }
 
-.dropdowncontent {
+:global(.dropdowncontent) {
   display: none;
   position: absolute;
   background-color: rgb(32, 32, 32);
@@ -140,20 +140,20 @@
   z-index: 1;
 }
 
-.dropdown:hover .dropdowncontent {
+:global(.dropdown:hover .dropdowncontent) {
   display: block;
 }
 
-.albumheader {
+:global(.albumheader) {
   padding-bottom: 50px;
 }
 
-.containeralbumimageplay {
+:global(.containeralbumimageplay) {
   position: relative;
   width: 150px;
 }
 
-.albumimage {
+:global(.albumimage) {
   opacity: 1;
   display: block;
   width: 140px;
@@ -161,7 +161,7 @@
   backface-visibility: hidden;
 }
 
-.middlealbumimage {
+:global(.middlealbumimage) {
   opacity: 0;
   position: absolute;
   top: 50%;
@@ -171,21 +171,21 @@
   text-align: center;
 }
 
-.containeralbumimageplay:hover .albumimage {
+:global(.containeralbumimageplay:hover .albumimage) {
   opacity: 0.3;
 }
 
-.containeralbumimageplay:hover .middlealbumimage {
+:global(.containeralbumimageplay:hover .middlealbumimage) {
   opacity: 1;
 }
 
-.middlealbumimagetext {
+:global(.middlealbumimagetext) {
   color: rgb(255, 255, 255);
   font-size: 16px;
 }
 
-.middlealbumimagetext:hover {
-  transform:scale(1.1,1.1);
-  -webkit-transform:scale(1.1,1.1);
-  -moz-transform:scale(1.1,1.1);
+:global(.middlealbumimagetext:hover) {
+  transform: scale(1.1, 1.1);
+  -webkit-transform: scale(1.1, 1.1);
+  -moz-transform: scale(1.1, 1.1);
 }

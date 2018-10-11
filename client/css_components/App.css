@@ -1,4 +1,4 @@
-.albumsModule {
+:global(.albumsModule) {
   background: rgb(25, 25, 25);
   color: white;
   font-family: 'Open Sans', sans-serif;
@@ -9,25 +9,25 @@
   margin-top: 30px;
 }
 
-.playerModule {
+:global(.playerModule) {
   width: 100%;
   height: 85px;
   position: fixed;
   background-color: #292929;
-  bottom: 0px; 
+  bottom: 0px;
   z-index: 10;
 }
 
-#horizLine {
+:global(#horizLine) {
   display: block;
   height: 1px;
   border: 0;
   border-top: 1px solid rgba(92, 91, 91, 0.404);
   margin: 1em 0;
-  padding: 0; 
+  padding: 0;
 }
 
-#AppAlbumTitle {
+:global(#AppAlbumTitle) {
   font-weight: 700;
   font-size: 14pt;
 }
