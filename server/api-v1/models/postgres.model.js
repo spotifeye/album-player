@@ -1,18 +1,12 @@
 const { ADD, FIND, UPDATE, DELETE } = require('./postgres.queries');
-
+const nestObj = require('./nestObj');
 module.exports = {
   GET: {
     ALBUMS: async (artistID, callback) => {
       try {
-        var artist = await FIND.artist(artistID);
-        var albums = await FIND.albums(artistID);
-        var artist = artist[0];
-        artist.albums = albums;
-        for (let i = 0; i < albums.length; i++) {
-          albums[i].songs = await FIND.songs(albums[i].albumID);
-        }
+        var artistAlbumsSongs = await FIND.artistAlbumsSongs(artistID);
         // this gives the following structure: artist = {..., albums:[song{...},song{...}, ... ]}
-        callback(null, artist);
+        callback(null, nestObj(artistAlbumsSongs));
       } catch (error) {
         callback(error);
       }

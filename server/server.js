@@ -16,9 +16,9 @@ server.use('/', express.static(path.join(__dirname, '../public')));
 
 server.use('/artists/:artistID', express.static(path.join(__dirname, '../public')));
 
-server.get('/', (req, res, next) => {
-  res.send('LOGGING GET FROM HOST');
-});
+// server.get('/', (req, res, next) => {
+//   res.send('LOGGING GET FROM HOST');
+// });
 
 server.use(
   '/api/v1',

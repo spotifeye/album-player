@@ -37,7 +37,8 @@ var db = {
     albums: targetArtistID => dbPool(`SELECT "albumID", "albumName", "albumImage", "publishedYear"  FROM "ALBUMS" WHERE artist_id = ${targetArtistID};`),
     album: targetAlbumID => dbPool(`SELECT "albumID", "albumName", "albumImage", "publishedYear"  FROM "ALBUMS" WHERE "albumID" = ${targetAlbumID};`),
     songs: targetAlbumID => dbPool(`SELECT * FROM "SONGS" WHERE album_id = ${targetAlbumID};`),
-    song: targetSongID => dbPool(`SELECT * FROM "SONGS" WHERE "songID" = ${targetSongID};`)
+    song: targetSongID => dbPool(`SELECT * FROM "SONGS" WHERE "songID" = ${targetSongID};`),
+    artistAlbumsSongs: targetArtistID => dbPool(`SELECT * FROM "ARTISTS", "ALBUMS", "SONGS" WHERE artist_id = ${targetArtistID} AND artist_id = "artistID" AND album_id="albumID";`)
   },
   UPDATE: {
     /* artist:() => {// METHOD DISABLED}, */

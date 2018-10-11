@@ -38,17 +38,17 @@ class Album extends React.Component {
     });
   }
 
-  componentDidUpdate() {
-    if (this.state.library.length === 1 && this.props.album.songs.length > 1) {
-      var songsInLibrary = [];
-      for (var i = 0; i < this.props.album.songs.length; i++) {
-        songsInLibrary.push(this.props.album.songs[i].addedToLibrary);
-      }
-      this.setState({
-        library: songsInLibrary
-      });
-    }
-  }
+  // componentDidUpdate() {
+  //   if (this.state.library.length === 1 && this.props.album.songs.length > 1) {
+  //     var songsInLibrary = [];
+  //     for (var i = 0; i < this.props.album.songs.length; i++) {
+  //       songsInLibrary.push(this.props.album.songs[i].addedToLibrary);
+  //     }
+  //     this.setState({
+  //       library: songsInLibrary
+  //     });
+  //   }
+  // }
 
   componentWillReceiveProps(newProps) {
     if (newProps.albumPlaying === 0) {

@@ -13,7 +13,7 @@
     "react-dev": "webpack -d --watch",
     "react-prod": "webpack",
     "gen-data": "node --max-old-space-size=6384 dataGeneration/postgres/dataGeneration.tables.js",
-    "seed-data": "node seedDatabase.js",
+    "seed-data": "node dataSeed/seed.postgres.js",
     "test": "jest",
     "server-profile": "NODE_ENV=production node --prof server/index.js",
     "apache-bench": "ab  -k -c 1000 -n 100000  'http://localhost:3001/api/v1/artists/100/albums/'"
