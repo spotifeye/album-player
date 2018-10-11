@@ -1,6 +1,6 @@
 const path = require('path');
-var SRC_DIR = path.join(__dirname, '/react-client/src');
-const DIST_DIR = path.join(__dirname, '/public/dist');
+var SRC_DIR = path.join(__dirname, '/client');
+const DIST_DIR = path.join(__dirname, '/public');
 
 module.exports = {
   context: __dirname,

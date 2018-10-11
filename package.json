@@ -11,7 +11,7 @@
     "start": "nodemon server/index.js",
     "mon-server": "nodemon server/index.js",
     "react-dev": "webpack -d --watch",
-    "react-prod": "webpack",
+    "build": "webpack --config webpack.prod.js",
     "gen-data": "node --max-old-space-size=6384 dataGeneration/postgres/dataGeneration.tables.js",
     "seed-data": "node dataSeed/seed.postgres.js",
     "test": "jest",
@@ -44,7 +44,6 @@
     "morgan": "^1.9.1",
     "newrelic": "^4.9.0",
     "nodemon": "^1.18.4",
-    "orientjs": "^3.0.0",
     "pg": "^7.4.3",
     "rc-dropdown": "^2.2.0",
     "rc-menu": "^7.4.8",
@@ -55,16 +54,23 @@
     "redis": "^2.8.0"
   },
   "devDependencies": {
-    "babel-core": "^6.23.1",
-    "babel-loader": "^6.3.2",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-react": "^6.23.0",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.1.5",
+    "babel-loader": "^8.0.4",
+    "compression-webpack-plugin": "^2.0.0",
     "css-loader": "^1.0.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "jest": "^23.6.0",
-    "style-loader": "^0.23.0",
+    "postcss-loader": "^3.0.0",
+    "precss": "^3.1.2",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
     "superagent": "^3.8.3",
     "supertest": "^3.3.0",
-    "webpack": "^2.2.1"
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-merge": "^4.1.4"
   }
 }
