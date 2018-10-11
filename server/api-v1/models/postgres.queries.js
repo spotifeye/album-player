@@ -24,46 +24,47 @@ Left in for organization and future updates.
 */
 var db = {
   ADD: {
-    artist: ({ name }) => {
-      dpPool(`INSERT INTO "ARTISTS" (name) VALUES (${name});`);
+    artist: ({ artistName }) => {
+      dpPool(`INSERT INTO "ARTISTS" ("artistName") VALUES (${artistName});`);
     },
-    /* albums: () => {// METHOD NOT AVAILABLE}, */
-    album: ({ name, image, publishedYear, targetArtistID }) => dbPool(`INSERT INTO "ALBUMS" (name,image,"publishedYear",artist_id) VALUES ('${name}', '${image}' , ${publishedYear}, ${targetArtistID});`),
-    /* songs: () => {// METHOD NOT AVAILABLE}, */
-    song: ({ name, streams, length, popularity, addedToLibrary, targetAlbum_id }) => dbPool(`INSERT INTO "SONGS" (name,streams,length,popularity,"addedToLibrary",album_id) VALUES ('${name}', ${streams} , ${length}, ${popularity}, ${addedToLibrary},${targetAlbum_id});`)
+    /* albums: () => {// METHOD DISABLED}, */
+    album: ({ artistName, albumImage, publishedYear, targetArtistID }) => dbPool(`INSERT INTO "ALBUMS" ("artistName","albumImage","publishedYear",artist_id) VALUES ('${artistName}', '${albumImage}' , ${publishedYear}, ${targetArtistID});`),
+    /* songs: () => {// METHOD DISABLED}, */
+    song: ({ songName, streams, length, popularity, addedToLibrary, targetAlbum_id }) => dbPool(`INSERT INTO "SONGS" ("songName",streams,length,popularity,"addedToLibrary",album_id) VALUES ('${songName}', ${streams} , ${length}, ${popularity}, ${addedToLibrary},${targetAlbum_id});`)
   },
   FIND: {
-    artist: targetArtistID => dbPool(`SELECT * FROM "ARTISTS" WHERE id = ${targetArtistID};`),
-    albums: targetArtistID => dbPool(`SELECT id, name, image, "publishedYear"  FROM "ALBUMS" WHERE artist_id = ${targetArtistID};`),
-    album: targetAlbumID => dbPool(`SELECT id, name, image, "publishedYear"  FROM "ALBUMS" WHERE id = ${targetAlbumID};`),
+    artist: targetArtistID => dbPool(`SELECT * FROM "ARTISTS" WHERE "artistID" = ${targetArtistID};`),
+    albums: targetArtistID => dbPool(`SELECT "albumID", "albumName", "albumImage", "publishedYear"  FROM "ALBUMS" WHERE artist_id = ${targetArtistID};`),
+    album: targetAlbumID => dbPool(`SELECT "albumID", "albumName", "albumImage", "publishedYear"  FROM "ALBUMS" WHERE "albumID" = ${targetAlbumID};`),
     songs: targetAlbumID => dbPool(`SELECT * FROM "SONGS" WHERE album_id = ${targetAlbumID};`),
-    song: targetSongID => dbPool(`SELECT * FROM "SONGS" WHERE id = ${targetSongID};`)
+    song: targetSongID => dbPool(`SELECT * FROM "SONGS" WHERE "songID" = ${targetSongID};`),
+    artistAlbumsSongs: targetArtistID => dbPool(`SELECT * FROM "ARTISTS", "ALBUMS", "SONGS" WHERE artist_id = ${targetArtistID} AND artist_id = "artistID" AND album_id="albumID";`)
   },
   UPDATE: {
-    /* artist:() => {// METHOD NOT AVAILABLE}, */
-    /* albums: () => {// METHOD NOT AVAILABLE}, */
-    album: ({ targetAlbumID, name, image, publishedYear }) =>
+    /* artist:() => {// METHOD DISABLED}, */
+    /* albums: () => {// METHOD DISABLED}, */
+    album: ({ targetAlbumID, albumName, albumImage, publishedYear }) =>
       dbPool(`UPDATE "ALBUMS" SET 
-      name = '${name}', 
-      image = '${image}', 
+      "albumName" = '${albumName}', 
+      "albumImage" = '${albumImage}', 
       "publishedYear" = ${publishedYear} 
-      WHERE id = ${targetAlbumID};`),
-    /* songs: () => {// METHOD NOT AVAILABLE}, */
+      WHERE "albumID" = ${targetAlbumID};`),
+    /* songs: () => {// METHOD DISABLED}, */
     song: ({ targetSongID, name, streams, length, popularity, addedToLibrary, targetAlbum_id }) =>
       dbPool(`UPDATE "SONGS" SET 
-      name = '${name}', 
+      "songName" = '${songName}', 
       streams = ${streams}, 
       length = ${length}, 
       popularity = ${popularity}, 
       "addedToLibrary" = ${addedToLibrary} 
-      WHERE id = ${targetSongID};`)
+      WHERE "songID" = ${targetSongID};`)
   },
   DELETE: {
-    /* artist:() => {// METHOD NOT AVAILABLE}, */
-    /* albums:() => {// METHOD NOT AVAILABLE}, */
-    album: targetAlbumID => dbPool(`DELETE FROM "ALBUMS" WHERE id = ${targetAlbumID}`),
-    /* songs:() => {// METHOD NOT AVAILABLE}, */
-    song: targetSongID => dbPool(`DELETE FROM "SONGS" WHERE id = ${targetSongID}`)
+    /* artist:() => {// METHOD DISABLED}, */
+    /* albums:() => {// METHOD DISABLED}, */
+    album: targetAlbumID => dbPool(`DELETE FROM "ALBUMS" WHERE "albumID" = ${targetAlbumID}`),
+    /* songs:() => {// METHOD DISABLED}, */
+    song: targetSongID => dbPool(`DELETE FROM "SONGS" WHERE "songID" = ${targetSongID}`)
   }
 };
 
