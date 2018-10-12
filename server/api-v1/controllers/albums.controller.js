@@ -1,19 +1,54 @@
 const DB = require('../models/postgres.model.js');
 const CheckReqBody = require('./CheckReqBody');
+const redis = require('redis');
+const client = redis.createClient(6379, process.env.REDIS_HOST);
+
+const queryRedis = (req, res, postgresLookup) => {
+  let key = req.params.toString();
+  client.get(key, (err, result) => {
+    if (result) {
+      res.send(result);
+    } else {
+      postgresLookup(req, res);
+    }
+  });
+};
+
+const getAllAlbumsPG = (req, res) => {
+  DB.GET.ALBUMS(req.params.artistID, (error, albums) => {
+    if (error || albums.length === 0) {
+      res.sendStatus(404);
+    } else {
+      client.setex(`${req.path},${req.params.artistID}`, 3600, albums);
+      res.status(200).send(albums);
+    }
+  });
+};
+
+const getOneAlbumPG = (req, res) => {
+  DB.GET.ALBUM(req.params.albumID, (error, album) => {
+    if (error) {
+      res.sendStatus(404);
+    } else {
+      if (album.length === 0) {
+        res.sendStatus(404);
+      } else {
+        var data = { album };
+        res.status(200).send(data);
+      }
+    }
+  });
+};
 
 module.exports = {
   allAlbums: {
     GET(req, res) {
-      DB.GET.ALBUMS(req.params.artistID, (error, albums) => {
-        // console.log('ERROR', error);
-        // console.log('ALBUMS', albums);
-
-        if (error || albums.length === 0) {
-          res.sendStatus(404);
-        } else {
-          res.status(200).send(albums);
-        }
-      });
+      // Toggle between Redis On/Off
+      if (process.env.REDIS_HOST) {
+        queryRedis(req, res, getAllAlbumsPG);
+      } else {
+        getAllAlbumsPG(req, res);
+      }
     },
     POST(req, res) {
       let expectedBody = {
@@ -47,18 +82,11 @@ module.exports = {
   },
   oneAlbum: {
     GET(req, res) {
-      DB.GET.ALBUM(req.params.albumID, (error, album) => {
-        if (error) {
-          res.sendStatus(404);
-        } else {
-          if (album.length === 0) {
-            res.sendStatus(404);
-          } else {
-            var data = { album };
-            res.status(200).send(data);
-          }
-        }
-      });
+      if (process.env.REDIS_HOST) {
+        queryRedis(req, res, getOneAlbumPG);
+      } else {
+        getOneAlbumPG(req, res);
+      }
     },
     POST(req, res) {
       // 405 Method Not Allowed: can't post to a specific album
