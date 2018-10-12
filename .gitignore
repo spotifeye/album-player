@@ -42,3 +42,9 @@ mongoDB-legacyCode/
 config/
 
 tempCodeRunnerFile.js
+
+
+# terrform related
+.DS_Store
+*.tfstate*
+.terraform
